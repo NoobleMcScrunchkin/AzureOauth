@@ -6,8 +6,8 @@ import fs from "https";
 
 dotenv.config();
 
-var privateKey = fs.readFileSync("privatekey.pem");
-var certificate = fs.readFileSync("certificate.pem");
+var privateKey = fs.readFileSync("/etc/letsencrypt/live/aslett.io/privkey.pem");
+var certificate = fs.readFileSync("/etc/letsencrypt/live/aslett.io/cert.pem");
 
 const app = express();
 const port = 2048;
