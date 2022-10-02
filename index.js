@@ -4,8 +4,21 @@ import fetch from "node-fetch";
 
 dotenv.config();
 
+var privateKey = fs.readFileSync("privatekey.pem");
+var certificate = fs.readFileSync("certificate.pem");
+
 const app = express();
 const port = 2048;
+
+https
+	.createServer(
+		{
+			key: privateKey,
+			cert: certificate,
+		},
+		app
+	)
+	.listen(port);
 
 app.get("/microsoft/callback", async (req, res) => {
 	if (req.query.error && req.query.error_description) {
@@ -29,10 +42,6 @@ app.get("/microsoft/refresh", async (req, res) => {
 	let token = await refresh_token(req.query.refresh_token);
 
 	res.json(token);
-});
-
-let server = app.listen(port, () => {
-	console.log(`Listening on port ${port}`);
 });
 
 async function get_token(code) {
