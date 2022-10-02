@@ -10,16 +10,6 @@ var certificate = fs.readFileSync("certificate.pem");
 const app = express();
 const port = 2048;
 
-https
-	.createServer(
-		{
-			key: privateKey,
-			cert: certificate,
-		},
-		app
-	)
-	.listen(port);
-
 app.get("/microsoft/callback", async (req, res) => {
 	if (req.query.error && req.query.error_description) {
 		console.error("Error: " + req.query.error + "\n" + req.query.error_description);
@@ -43,6 +33,16 @@ app.get("/microsoft/refresh", async (req, res) => {
 
 	res.json(token);
 });
+
+https
+	.createServer(
+		{
+			key: privateKey,
+			cert: certificate,
+		},
+		app
+	)
+	.listen(port);
 
 async function get_token(code) {
 	let res = await fetch("https://login.live.com/oauth20_token.srf", {
