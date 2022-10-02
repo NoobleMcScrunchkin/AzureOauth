@@ -19,6 +19,16 @@ app.get("/microsoft/callback", async (req, res) => {
 		return;
 	}
 
+	res.json(true);
+});
+
+app.get("/microsoft/token", async (req, res) => {
+	if (!(req.query.code && req.query.code != "")) {
+		console.error("Error: Invalid Refresh Token");
+		res.send(false);
+		return;
+	}
+
 	let token = await get_token(req.query.code);
 
 	res.json(token);
