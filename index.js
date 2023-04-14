@@ -46,6 +46,25 @@ app.get("/microsoft/refresh", async (req, res) => {
 	res.json(token);
 });
 
+app.get("/csgo/:id/profile", async (req, res) => {
+	if (!req.params.id) {
+		console.error("Error: Invalid ID");
+		res.send(false);
+		return;
+	}
+
+	let data = await fetch(`https://public-api.tracker.gg/v2/csgo/standard/profile/steam/${req.params.id}`, {
+		method: "GET",
+		headers: {
+			"TRN-Api-Key": process.env.TRACKER_API_KEY,
+		},
+	});
+
+	let json = await data.json();
+
+	res.json(json);
+});
+
 https
 	.createServer(
 		{
