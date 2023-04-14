@@ -62,7 +62,7 @@ app.get("/csgo/:id/profile", async (req, res) => {
 
 	let json = await data.json();
 
-	res.json(json);
+	res.status(data.status).json(json);
 });
 
 app.get("/csgo/:id/maps", async (req, res) => {
@@ -81,7 +81,7 @@ app.get("/csgo/:id/maps", async (req, res) => {
 
 	let json = await data.json();
 
-	res.json(json);
+	res.status(data.status).json(json);
 });
 
 app.get("/csgo/:id/weapons", async (req, res) => {
@@ -100,7 +100,7 @@ app.get("/csgo/:id/weapons", async (req, res) => {
 
 	let json = await data.json();
 
-	res.json(json);
+	res.status(data.status).json(json);
 });
 
 https
