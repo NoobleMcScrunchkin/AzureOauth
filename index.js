@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import fetch from "node-fetch";
 import fs from "fs";
 import https from "https";
+import cors from "cors";
 
 dotenv.config();
 
@@ -11,6 +12,12 @@ var certificate = fs.readFileSync("/etc/letsencrypt/live/aslett.io/cert.pem");
 
 const app = express();
 const port = 2048;
+
+app.use(
+	cors({
+		origin: "*",
+	})
+);
 
 app.get("/microsoft/callback", async (req, res) => {
 	if (req.query.error && req.query.error_description) {
